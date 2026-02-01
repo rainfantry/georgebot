@@ -99,16 +99,32 @@ def auto_search(text, rag):
     return ""
 
 
-def print_banner(brain_name: str):
+def print_banner(brain_name: str, rag_files: int = 0):
     print("""
- ╔═══════════════════════════════════════╗
- ║           GEORGEBOT v0.1              ║
- ║   Multi-brain Aussie Voice Agent      ║
- ╚═══════════════════════════════════════╝
+ ╔═══════════════════════════════════════════════════════╗
+ ║  GEORGEBOT v0.1                          George Wu    ║
+ ║  Multi-brain Aussie Voice Agent                       ║
+ ╠═══════════════════════════════════════════════════════╣
+ ║  COMMANDS                                             ║
+ ║  exit          end session                            ║
+ ║  brain <name>  switch brain (ollama/grok)             ║
+ ║  files         list knowledge files                   ║
+ ║  clear         wipe memory                            ║
+ ║  help          show all commands                      ║
+ ╠═══════════════════════════════════════════════════════╣
+ ║  NATURAL LANGUAGE                                     ║
+ ║  "my name is X"     auto-stores                       ║
+ ║  "what is my name"  auto-recalls                      ║
+ ╠═══════════════════════════════════════════════════════╣
+ ║  OLLAMA QUICK REF                                     ║
+ ║  ollama list        show models                       ║
+ ║  ollama pull <m>    download model                    ║
+ ║  ollama run <m>     test model                        ║
+ ╚═══════════════════════════════════════════════════════╝
 """)
     print(f"  Brain: {brain_name}")
-    print(f"  Commands: exit | clear | brain <name> | help")
-    print("=" * 45)
+    print(f"  Knowledge files: {rag_files}")
+    print("=" * 57)
 
 
 def main():
@@ -140,10 +156,11 @@ def main():
     if not brain.check():
         print(f"[Warning: {brain.name} may not be available]")
 
-    print_banner(brain.name)
-
     # Initialize RAG and Session
     rag = RAGSearch(str(RAG_DIR))
+    rag_stats = rag.get_stats()
+
+    print_banner(brain.name, rag_stats["file_count"])
     session = Session(memory_dir=str(MEMORY_DIR))
 
     # Startup voice
