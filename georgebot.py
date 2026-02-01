@@ -102,24 +102,22 @@ def auto_search(text, rag):
 def print_banner(brain_name: str, rag_files: int = 0):
     print("""
  ╔═══════════════════════════════════════════════════════╗
- ║  GEORGEBOT v0.1                          George Wu    ║
+ ║  GEORGEBOT v0.2                          George Wu    ║
  ║  Multi-brain Aussie Voice Agent                       ║
  ╠═══════════════════════════════════════════════════════╣
+ ║  BRAINS (model <name>)                                ║
+ ║  georgebot-chat   mistral 7b    fast banter           ║
+ ║  georgebot-plan   deepseek 33b  slow architect        ║
+ ║  georgebot-build  deepseek 6.7b fast coder            ║
+ ╠═══════════════════════════════════════════════════════╣
  ║  COMMANDS                                             ║
- ║  exit          end session                            ║
- ║  brain <name>  switch brain (ollama/grok)             ║
- ║  files         list knowledge files                   ║
- ║  clear         wipe memory                            ║
- ║  help          show all commands                      ║
+ ║  exit       end session     brain <x>  switch api     ║
+ ║  clear      wipe memory     model <x>  switch model   ║
+ ║  models     list models     pull <x>   download       ║
+ ║  files      knowledge       help       all commands   ║
  ╠═══════════════════════════════════════════════════════╣
- ║  NATURAL LANGUAGE                                     ║
- ║  "my name is X"     auto-stores                       ║
- ║  "what is my name"  auto-recalls                      ║
- ╠═══════════════════════════════════════════════════════╣
- ║  OLLAMA QUICK REF                                     ║
- ║  ollama list        show models                       ║
- ║  ollama pull <m>    download model                    ║
- ║  ollama run <m>     test model                        ║
+ ║  MEMORY  "my name is X" auto-stores                   ║
+ ║          "what is my name" auto-recalls               ║
  ╚═══════════════════════════════════════════════════════╝
 """)
     print(f"  Brain: {brain_name}")
