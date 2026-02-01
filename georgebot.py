@@ -195,7 +195,47 @@ Commands:
   remember <note>   - Save note to knowledge base
   files             - List knowledge files
   help              - Show this
+
+Ollama Commands:
+  models            - List installed models
+  model <name>      - Switch ollama model
+  pull <name>       - Download a model
+  create            - Create custom georgebot model
 """)
+                continue
+
+            if user_input.lower() == "models":
+                from clients.ollama import OllamaBrain
+                temp = OllamaBrain()
+                print(temp.list_models())
+                continue
+
+            if user_input.lower().startswith("model "):
+                new_model = user_input.split(maxsplit=1)[1].strip()
+                if hasattr(brain, 'switch_model'):
+                    brain.switch_model(new_model)
+                else:
+                    print("Only works with ollama brain")
+                continue
+
+            if user_input.lower().startswith("pull "):
+                model_name = user_input.split(maxsplit=1)[1].strip()
+                from clients.ollama import OllamaBrain
+                temp = OllamaBrain()
+                temp.pull_model(model_name)
+                continue
+
+            if user_input.lower() == "create":
+                from clients.ollama import OllamaBrain, DEFAULT_SYSTEM_PROMPT
+                print("Creating custom 'georgebot' model with default prompt...")
+                print(f"System prompt:\n{DEFAULT_SYSTEM_PROMPT[:200]}...")
+                temp = OllamaBrain()
+                temp.create_model(
+                    name="georgebot",
+                    base_model="mistral:7b",
+                    system_prompt=DEFAULT_SYSTEM_PROMPT
+                )
+                print("\nTo use: model georgebot")
                 continue
 
             if user_input.lower() == "clear":
